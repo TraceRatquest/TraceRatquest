@@ -1,11 +1,12 @@
-import { DataI } from "../types/types";
+import { Trace } from "../models/Trace";
 
 interface TablePropsI {
-    data: DataI[];
+    data: Trace[];
     tableHeaders: string[];
+    callback: () => void;
 }
 
-export const Table = ({ data, tableHeaders }: TablePropsI) => {
+export const Table = ({ data, tableHeaders, callback }: TablePropsI) => {
 
     // TODO: make dexie table component with pagination, sorting, filtering
 

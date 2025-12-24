@@ -1,28 +1,36 @@
 import { useEffect, useState } from "react"
 import { Table } from "./components/Table"
-import { DataI } from "./types/types"
 import { useQuery } from "@tanstack/react-query"
+import { db } from "./models/db"
+import { Trace } from "./models/Trace"
 
 export const Home = () => {
-    const [fetchedTraces, setFetchedTraces] = useState<DataI[]>([])
 
     const getTraces = async () => {
-        const response = await fetch("/traces")
+        const response = await fetch("/trace")
         return await response.json()
     }
 
-    const { data, isError, isFetched } = useQuery({
+    const { data = [], isError } = useQuery({
         queryKey: ["traces"],
         queryFn: getTraces,
     })
 
-    if (isFetched && data ) {
-        setFetchedTraces(data)
-    }
-
     useEffect(() => {
+        try {
+            if (data.length > 0) {
+                db.deleteTraceData()
+                Promise.all(data.map((trace: Trace) => db.trace.add(trace)))
+            }
+        } 
+        catch (error) {
+            console.error("Failed to store traces in IndexedDB", error)
+        }
+    }, [data])
 
-    }, [fetchedTraces])
+    const refetchData = () => {
+        console.log("callback called")
+    }
 
 
 
@@ -36,7 +44,9 @@ export const Home = () => {
                 </div>
             </>}
             
-            <Table data={fetchedTraces} tableHeaders={["id", "Span ID", "Service", "Route", "Duration", "Status", "Time"]} />
+            <Table data={data} 
+                    tableHeaders={["id", "Span ID", "Service", "Route", "Duration", "Status", "Time"]}
+                    callback={refetchData} />
         </div>
     )
 }

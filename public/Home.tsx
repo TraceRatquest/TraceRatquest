@@ -6,15 +6,20 @@ import { Trace } from "./models/Trace"
 
 export const Home = () => {
 
+    const [refetchedData, setRefetchedData] = useState<Trace[]>([])
+
     const getTraces = async () => {
         const response = await fetch("/trace")
         return await response.json()
     }
 
-    const { data = [], isError } = useQuery({
+    const { data = [], isError, refetch, isRefetching } = useQuery({
         queryKey: ["traces"],
         queryFn: getTraces,
+        refetchInterval: 3000
     })
+
+    
 
     useEffect(() => {
         try {
@@ -22,21 +27,27 @@ export const Home = () => {
                 db.deleteTraceData()
                 Promise.all(data.map((trace: Trace) => db.trace.add(trace)))
             }
+            setRefetchedData(data)
         } 
         catch (error) {
             console.error("Failed to store traces in IndexedDB", error)
         }
-    }, [data])
+        console.log("Data fetched:", data)
+    }, [data, refetchedData])
 
     const refetchData = () => {
-        console.log("callback called")
+        refetch()
+        setRefetchedData(data)
     }
 
 
 
     return (
-        <div>
-            <h1>Welcome to Ratquest Trace</h1>
+        <div className="container-md">
+            <div className="d-flex justify-content-between m-3 p-3 border-bottom">
+                <h1>Welcome to Ratquest Trace</h1>
+                <button onClick={refetchData}>Refresh</button>
+            </div>
             {isError && <>
                 <div className="alert alert-dismissible alert-danger">
                     <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
@@ -44,7 +55,7 @@ export const Home = () => {
                 </div>
             </>}
             
-            <Table data={data} 
+            <Table data={refetchedData} 
                     tableHeaders={["id", "Span ID", "Service", "Route", "Duration", "Status", "Time"]}
                     callback={refetchData} />
         </div>

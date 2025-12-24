@@ -13,7 +13,7 @@ export const Table = ({ data, tableHeaders, callback }: TablePropsI) => {
 
     return (
         <>
-        <table>
+        <table className="table table-hover">
             <thead>
                 <tr>
                     {tableHeaders.map((header) => (

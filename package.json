@@ -1,0 +1,27 @@
+{
+  "name": "app",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "generate-api-key": "bun run src/utils/generateApiKey.ts"
+  },
+  "dependencies": {
+    "@elysiajs/static": "^1.4.7",
+    "@prisma/adapter-libsql": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "@tanstack/react-query": "^5.90.12",
+    "elysia": "^1.4.19",
+    "prismabox": "^1.1.26",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.91.2",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "bun-types": "latest",
+    "prisma": "^7.2.0"
+  },
+  "module": "src/index.js"
+}

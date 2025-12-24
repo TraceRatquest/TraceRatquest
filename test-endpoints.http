@@ -1,0 +1,13 @@
+
+POST http://localhost:3000/trace 
+Content-Type: application/json
+X-API-KEY: mdkaljdkfla
+
+{
+  "spanId": "abc123",
+  "service": "user-service",
+  "route": "/api/users",
+  "duration": 143,
+  "status": "200 OK",
+  "timestamp": "2024-06-15T12:34:56Z"
+}

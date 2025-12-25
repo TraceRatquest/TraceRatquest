@@ -4,14 +4,11 @@ import { createRoot } from "react-dom/client"
 import { Home } from "./Home";
 
 function App() {
-    const [count, setCount] = useState<number>(0);
 
     const queryClient = new QueryClient()
 
     return (
         <main>
-            <h2>{count}</h2>
-            <button onClick={() => setCount((c) => c + 1)}>Increase</button>
             <QueryClientProvider client={queryClient}>
                 <Home />
             </QueryClientProvider>

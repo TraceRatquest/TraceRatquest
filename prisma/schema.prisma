@@ -34,7 +34,7 @@ model ApiKey {
 
 model Trace {
   id        String   @id @default(cuid())
-  spanId    String   
+  traceId   String   
   service   String
   route     String
   duration  Int

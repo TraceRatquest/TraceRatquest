@@ -3,12 +3,14 @@ import { onStartServer } from "./core/cli";
 import { prisma } from "../lib/pisma";
 import { TracePlainInputCreate } from "./generated/prismabox/Trace";
 import { auth } from "../lib/auth";
+import swagger from "@elysiajs/swagger";
 import staticPlugin from "@elysiajs/static";
 
 await onStartServer();
 
 
 const app = new Elysia()
+  .use(swagger())
   .use(await staticPlugin({
     prefix: '/'
   }))

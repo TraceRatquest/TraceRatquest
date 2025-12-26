@@ -8,3 +8,11 @@ export interface DataI {
     timestamp: string
 }
 
+export interface CustomTraceI {
+    traceId: string
+    service: string
+    route: string
+    duration: string
+    status: string 
+    timestamp: string
+}

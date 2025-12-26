@@ -3,20 +3,22 @@ import { Table } from "./components/Table"
 import { useQuery } from "@tanstack/react-query"
 import { db } from "./models/db"
 import { Trace } from "./models/Trace"
+import { CustomTraceI } from "./types/types"
 
 export const Home = () => {
 
     const [refetchedData, setRefetchedData] = useState<Trace[]>([])
+    const [customTraces, setCustomTraces] = useState<CustomTraceI[]>([])
 
     const getTraces = async () => {
         const response = await fetch("/trace")
         return await response.json()
     }
 
-    const { data = [], isError, refetch, isRefetching } = useQuery({
+    const { data = [], isError, isRefetching } = useQuery({
         queryKey: ["traces"],
         queryFn: getTraces,
-        refetchInterval: 3000
+        refetchInterval: 3000,
     })
 
     
@@ -33,20 +35,38 @@ export const Home = () => {
             console.error("Failed to store traces in IndexedDB", error)
         }
         console.log("Data fetched:", data)
-    }, [data, refetchedData])
+    }, [data])
 
-    const refetchData = () => {
-        refetch()
-        setRefetchedData(data)
-    }
+    useEffect(() => {
+        const localData = [] as CustomTraceI[]
+        refetchedData.forEach((trace) => {
+            const customTrace: CustomTraceI = {
+                traceId: trace.traceId,
+                service: trace.service,
+                route: trace.route,
+                duration: `${trace.duration} ms`,
+                status: trace.status,
+                timestamp: new Date(trace.timestamp).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit"
+                })
+                
+            }
+            localData.push(customTrace)
+        })
+        setCustomTraces(localData)
+    }, [refetchedData])
 
 
 
     return (
-        <div className="container-md">
+        <div className="container">
             <div className="d-flex justify-content-between m-3 p-3 border-bottom">
                 <h1>Welcome to Ratquest Trace</h1>
-                <button onClick={refetchData}>Refresh</button>
             </div>
             {isError && <>
                 <div className="alert alert-dismissible alert-danger">
@@ -55,9 +75,9 @@ export const Home = () => {
                 </div>
             </>}
             
-            <Table data={refetchedData} 
-                    tableHeaders={["id", "Span ID", "Service", "Route", "Duration", "Status", "Time"]}
-                    callback={refetchData} />
+            <Table data={customTraces} 
+                    tableHeaders={["Trace ID", "Service", "Route", "Duration", "Status", "Time"]}
+                    callback={() => {}} />
         </div>
     )
 }

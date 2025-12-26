@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1rem;
+    background-color: #0E1117;
+    color: #CFE3DC;
+}
+
+.table-def {
+    width: 100%;
+    border-collapse: collapse;
+    color: #CFE3DC;
+}
+.table-def th, td {
+    border-bottom: 1px solid #CFE3DC;
+    padding-bottom: 16px;
+    padding-top: 16px;;
+}
+
+
+.table-def th {
+    background-color: #181D27;
+    padding: 5px;
+    text-align: left;
+}
+
+/* .table-def tr:nth-child(even) {
+    background-color: #e4ffd8;
+} */
+
+.table-def tr:hover {
+    color: #73C7FF;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.container {
+    padding: 20px;
+}
+
+.m-3 {
+    margin: 10px;
+}
+
+.text-blue {
+    color: #73C7FF;
+}
+
+.traceid-style:hover {
+    text-decoration: underline;
+}
+
+/* when user clickes traceid-stlye text becomes red */
+.traceid-style:active {
+    color: #FF7B72;
+}

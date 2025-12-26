@@ -1,6 +1,6 @@
 export interface Trace {
     id?: string;
-    spanId: string;
+    traceId: string;
     service: string;
     route: string;
     duration: number;

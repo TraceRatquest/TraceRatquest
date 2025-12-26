@@ -53,3 +53,15 @@ body {
 .traceid-style:active {
     color: #FF7B72;
 }
+
+.status-success {
+    background-color: rgba(0, 128, 0, 0.363);
+    border: 1px solid green;
+    text-align: center;
+}
+
+.status-bad {
+    background-color: rgba(255, 166, 0, 0.363);
+    border: 1px solid orange;
+    text-align: center;
+}

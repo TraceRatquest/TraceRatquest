@@ -16,3 +16,5 @@ export interface CustomTraceI {
     status: string 
     timestamp: string
 }
+
+export type NavContextT = "traces" | "logs" | "home"

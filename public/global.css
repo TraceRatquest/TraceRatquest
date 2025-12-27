@@ -30,11 +30,11 @@ body {
 .table-def tr:hover {
     color: #73C7FF;
     cursor: pointer;
-    font-weight: bold;
 }
 
 .container {
     padding: 20px;
+    display: flex;
 }
 
 .m-3 {
@@ -64,4 +64,42 @@ body {
     background-color: rgba(255, 166, 0, 0.363);
     border: 1px solid orange;
     text-align: center;
+}
+
+
+/* navbar */
+
+.navbar-main {
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+    justify-content: space-between;
+    width: 200px;
+
+}
+.navbar-title h2 {
+    font-size: 16px;
+}
+
+.navbar-tabs-contaiter {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.navbar-tabs {
+    padding: 2px;
+    margin-top: 12px;
+    background-color: #181D27;
+    text-align: left;
+    padding-left: 9px;
+    border-radius: 9px;
+    cursor: pointer;
+}
+.navbar-tabs h1 {
+    margin: 0px;
+}
+
+.navbar-currentpage {
+    color: #FF7B72;
 }

@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 import { db } from "./models/db"
 import { Trace } from "./models/Trace"
 import { CustomTraceI } from "./types/types"
+import { Navbar } from "./components/Navbar"
 
 export const Home = () => {
 
@@ -62,19 +63,23 @@ export const Home = () => {
     }, [refetchedData])
 
 
-
     return (
         <div className="container">
             <div className="d-flex justify-content-between m-3 p-3 border-bottom">
+                {/* navigation bar */}
+                <Navbar />
                 <h1>Welcome to Ratquest Trace</h1>
             </div>
+
+            {/* error showcase */}
             {isError && <>
                 <div className="alert alert-dismissible alert-danger">
                     <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
                     <strong>Error!</strong> <a href="#" className="alert-link">Report bug</a> Fetch traces failed.
                 </div>
             </>}
-            
+
+
             <Table data={customTraces} 
                     tableHeaders={["Trace ID", "Service", "Route", "Duration", "Status", "Time"]}
                     callback={() => {}} />

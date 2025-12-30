@@ -2,9 +2,10 @@
 interface NavbarViewPropsI {
     tablist: string[]
     currentPage: string
+    changeOnClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
-export const NavbarView = ({ tablist, currentPage } : NavbarViewPropsI) => {
+export const NavbarView = ({ tablist, currentPage, changeOnClick } : NavbarViewPropsI) => {
     return (
         <>
             <div className="navbar-main">
@@ -15,8 +16,8 @@ export const NavbarView = ({ tablist, currentPage } : NavbarViewPropsI) => {
                     {tablist.map((tab, index) => {
                         return (
                             <div key={index} className="navbar-tabs">
-                                <div className={tab.includes(currentPage) ? "navbar-currentpage" : "navbar-tab"}>
-                                    <h1>{tab}</h1>
+                                <div onClick={changeOnClick} className={tab.includes(currentPage) ? "navbar-currentpage" : "navbar-tab"}>
+                                    <span>{tab}</span>
                                 </div>
                             </div>
                         )

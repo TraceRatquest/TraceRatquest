@@ -47,10 +47,14 @@ export const Table = ({ data, tableHeaders, callback }: TablePropsI) => {
                                 <td>{row.service}</td>
                                 <td>{row.route}</td>
                                 <td>{row.duration}</td>
-                                <td className={
-                                    row.status.toString().includes("200") && "status-success" ||
-                                    row.status.toString().includes("304") && "status-bad" || ""
-                                }>{row.status}</td>
+                                <td>
+                                    <span className={
+                                        row.status.toString().includes("200") ? "status-success" :
+                                        row.status.toString().includes("304") ? "status-bad" : ""
+                                    }>
+                                        {row.status}
+                                    </span>
+                                </td>
                                 <td>{row.timestamp}</td>
                             </tr>
                         )

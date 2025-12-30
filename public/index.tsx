@@ -9,12 +9,12 @@ function App() {
 
     const queryClient = new QueryClient()
 
-    const url = useRef<NavContextT>("home")
+    const [currentPage, setCurrentPage] = useState<NavContextT>("home")
 
     return (
         <main>
             <QueryClientProvider client={queryClient}>
-                <NavContext value={url.current} >
+                <NavContext value={{ currentPage, setCurrentPage }} >
                     <Home />
                 </NavContext>
             </QueryClientProvider>

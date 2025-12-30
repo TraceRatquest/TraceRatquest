@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { Table } from "./components/Table"
 import { useQuery } from "@tanstack/react-query"
 import { db } from "./models/db"
 import { Trace } from "./models/Trace"
 import { CustomTraceI } from "./types/types"
 import { Navbar } from "./components/Navbar"
+import { Loading } from "./components/Loading"
 
 export const Home = () => {
 
@@ -16,7 +17,7 @@ export const Home = () => {
         return await response.json()
     }
 
-    const { data = [], isError, isRefetching } = useQuery({
+    const { data = [], isError, isLoading } = useQuery({
         queryKey: ["traces"],
         queryFn: getTraces,
         refetchInterval: 3000,
@@ -65,24 +66,26 @@ export const Home = () => {
 
     return (
         <div className="container">
-            <div className="d-flex justify-content-between m-3 p-3 border-bottom">
-                {/* navigation bar */}
-                <Navbar />
+            <Navbar />
+
+            <div className="main-content">
                 <h1>Welcome to Ratquest Trace</h1>
+                
+                {/* error showcase */}
+                {isError && <>
+                    <div className="alert alert-dismissible alert-danger">
+                        <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
+                        <strong>Error!</strong> <a href="#" className="alert-link">Report bug</a> Fetch traces failed.
+                    </div>
+                </>}
+
+                {isLoading && <Loading />}
+                <Table data={customTraces} 
+                            tableHeaders={["Trace ID", "Service", "Route", "Duration", "Status", "Time"]}
+                            callback={() => {}} />
+
             </div>
 
-            {/* error showcase */}
-            {isError && <>
-                <div className="alert alert-dismissible alert-danger">
-                    <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
-                    <strong>Error!</strong> <a href="#" className="alert-link">Report bug</a> Fetch traces failed.
-                </div>
-            </>}
-
-
-            <Table data={customTraces} 
-                    tableHeaders={["Trace ID", "Service", "Route", "Duration", "Status", "Time"]}
-                    callback={() => {}} />
         </div>
     )
 }
